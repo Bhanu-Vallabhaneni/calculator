@@ -14,12 +14,12 @@ pipeline {
     }
      stage('Docker Hub'){
      steps{
- 	  withDockerRegistry([ credentialsId: "DockerhubPush", url: "" ]){
+ 	  withDockerRegistry([ credentialsId: "Dockerhub", url: "" ]){
  	   sh 'docker push bhanu201/calculatordocker:latest'
  	  }
      }
-   } 
-   stage('Deploy using Rundeck') {
+   }
+        stage('Deploy using Rundeck') {
       agent any
       steps {
         script {
@@ -33,6 +33,6 @@ pipeline {
           jobId: "6d50a1b5-fd68-4659-bd77-9d1e67980740"])
         }
       }
-    }  
-  }
+    }
+ } 
  }
