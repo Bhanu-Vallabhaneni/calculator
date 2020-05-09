@@ -18,6 +18,21 @@ pipeline {
  	   sh 'docker push bhanu201/calculatordocker:latest'
  	  }
      }
-   }   
+   }
+        stage('Deploy using Rundeck') {
+      agent any
+      steps {
+        script {
+          step([$class: "RundeckNotifier",
+          rundeckInstance: "Rundeck",
+          shouldFailTheBuild: true,
+          shouldWaitForRundeckJob: true,
+          options: """
+            BUILD_VERSION=$BUILD_NUMBER
+          """,
+          jobId: "6d50a1b5-fd68-4659-bd77-9d1e67980740"])
+        }
+      }
+    }
   }
  }
